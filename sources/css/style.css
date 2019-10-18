@@ -72,3 +72,27 @@ aside {
 aside span {
     margin-left: 10px;
 }
+
+ul li {
+    list-style-type: none;
+}
+
+.med-icon {
+    width: 40px;
+    height: 40px;
+    margin: 15px;
+}
+
+.btn-link {
+    filter: grayscale(100%);
+    opacity: 0.4;
+}
+
+.btn-link:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+aside li {
+    display: inline-flex;
+}
