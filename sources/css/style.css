@@ -38,17 +38,37 @@ figure img {
     width: 250%;
 }
 
-article {
-    margin-left: 10%;
-    display: inline-flex;
-}
-
-p.typography {
+.typography {
     font-family: 'Open Sans', sans-serif;
     font-weight: bold;
+    height: fit-content;
+    margin: 10px auto 20px 35%;
 }
 
-p.big {
+.big {
+    color: grey;
     font-size: 40px;
+}
+
+.ls {
     letter-spacing: 2px;
+}
+
+.detail {
+    font-weight: normal;
+    width: 50%;
+    text-align: justify;
+}
+
+aside {
+    margin-left: 35%;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+aside span {
+    margin-left: 10px;
 }
