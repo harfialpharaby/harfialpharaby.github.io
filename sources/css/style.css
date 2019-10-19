@@ -12,6 +12,33 @@ html, body {
     position: absolute;
 }
 
+header {
+    position: absolute;
+    right: 3%;
+    top: 15%;
+}
+
+.here {
+    width: 20px;
+}
+
+header ul li {
+    text-decoration: none;
+    margin: 20px auto;
+    letter-spacing: 2px;
+}
+
+.menu {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: white;
+    text-decoration: none;
+}
+
+.menu:hover {
+    color: blue;
+    background-color: white;
+}
+
 main {
     border-radius: 20px;
     position: absolute;
