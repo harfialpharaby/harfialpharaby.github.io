@@ -39,6 +39,10 @@ figure img {
     width: 250%;
 }
 
+article {
+    height: 700px;
+}
+
 .typography {
     font-family: 'Open Sans', sans-serif;
     font-weight: bold;
@@ -92,6 +96,7 @@ ul li {
 }
 
 .btn-link {
+    border-radius: 10%;
     filter: grayscale(100%);
     opacity: 0.4;
 }
