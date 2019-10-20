@@ -222,7 +222,11 @@ td.name{
 }
 
 td.desc {
-    text-align: left;
+    text-align: center;
+}
+
+td.desc img{
+    width: 150px;
 }
 
 td.desc ul li::before {
