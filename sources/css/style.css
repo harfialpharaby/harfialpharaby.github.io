@@ -214,6 +214,7 @@ td.date {
 }
 
 td.name{
+    opacity: 1;
     color: blue;
     padding-top: 10px;
     text-align: center;
@@ -222,7 +223,8 @@ td.name{
 }
 
 td.desc {
-    text-align: center;
+    opacity: 1;
+    text-align: left;
 }
 
 td.desc img{
