@@ -136,6 +136,12 @@
   function savePos() {
     try { write('term-pos', pos ? JSON.stringify(pos) : ''); } catch (e) {}
   }
+  /* belt-and-braces: if the window ever does change size, pull it back on screen */
+  function keepInView() {
+    if (win.hidden || docked()) return;
+    var r = win.getBoundingClientRect();
+    place(r.left, r.top);
+  }
 
   function say(text, cls) {
     var p = document.createElement('p');
@@ -316,6 +322,7 @@
       history.push(line); hIdx = history.length;
       input.value = '';
       run(line);
+      keepInView();
     } else if (e.key === 'ArrowUp') {
       if (!history.length) return;
       e.preventDefault();

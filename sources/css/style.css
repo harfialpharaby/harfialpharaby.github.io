@@ -337,7 +337,12 @@ blockquote cite{color:var(--muted);font-size:.8rem;font-style:normal}
 .tw__act svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.6;
   stroke-linecap:round}
 .tw__body{padding:.8rem .95rem;font-size:.84rem}
-.term__out{margin:0;max-height:min(46vh,17rem);overflow-y:auto;overscroll-behavior:contain}
+.term__out{
+  /* a FIXED height, not max-height: the window is positioned by its top edge, so if it
+     grew as output arrived the bottom would run off the screen. Constant size = the
+     placement stays valid, and the window never jumps while you type. */
+  margin:0;height:min(42vh,15rem);overflow-y:auto;overscroll-behavior:contain;
+}
 .term__out p{margin:0 0 .25rem;white-space:pre-wrap;word-break:break-word}
 .term__out .echo{color:var(--muted)}
 .term__out .err{color:#e0685f}
