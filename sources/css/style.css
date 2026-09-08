@@ -247,7 +247,22 @@ main{max-width:var(--wrap);margin:0 auto;padding:0 var(--pad)}
 .proj:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));transform:translateY(-2px)}
 .proj__shot{margin:0;line-height:0}
 .proj__shot .win{border:0;border-radius:0;box-shadow:none}
-.proj__shot img{display:block;width:100%;height:auto;aspect-ratio:16/8.68;object-fit:cover}
+.proj__zoom{
+  position:relative;display:block;width:100%;padding:0;margin:0;border:0;background:transparent;
+  cursor:zoom-in;line-height:0;
+}
+.proj__zoom img{display:block;width:100%;height:auto;aspect-ratio:16/8.68;object-fit:cover;transition:filter .2s ease}
+.proj__zoom-i{
+  position:absolute;right:.6rem;bottom:.6rem;width:30px;height:30px;border-radius:8px;
+  display:grid;place-items:center;background:color-mix(in srgb,var(--bg) 78%,transparent);
+  color:var(--fg);border:1px solid var(--line);opacity:0;transform:translateY(4px);
+  transition:opacity .18s ease,transform .18s ease,color .18s,border-color .18s;
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+}
+.proj__zoom-i svg{width:16px;height:16px;fill:currentColor}
+.proj__zoom:hover .proj__zoom-i,.proj__zoom:focus-visible .proj__zoom-i{opacity:1;transform:none}
+.proj__zoom:hover img{filter:brightness(.92)}
+.proj__zoom:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 .proj__body{padding:1.1rem 1.15rem 1.25rem;display:flex;flex-direction:column;gap:.75rem}
 .proj__t{margin:0;font-size:.98rem;font-weight:700;color:var(--fg)}
 .proj__d{margin:0;font-size:.85rem;line-height:1.6;color:var(--muted);max-width:60ch}
@@ -319,6 +334,34 @@ blockquote{
 }
 blockquote p{margin:0 0 .5rem;font-size:.95rem;font-style:italic;max-width:62ch}
 blockquote cite{color:var(--muted);font-size:.8rem;font-style:normal}
+
+/* ── image modal ────────────────────────────────────────── */
+.imodal{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;padding:1.4rem}
+.imodal[hidden]{display:none}
+.imodal__backdrop{
+  position:absolute;inset:0;background:color-mix(in srgb,var(--bg) 25%,#000 65%);
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+}
+.imodal__win{
+  position:relative;z-index:1;max-width:min(92vw,64rem);max-height:92vh;display:flex;flex-direction:column;
+  background:var(--bg-2);border:1px solid var(--line);border-radius:11px;overflow:hidden;
+  box-shadow:var(--portrait-shadow);
+}
+.imodal__bar{
+  display:flex;align-items:center;gap:.55rem;padding:.5rem .6rem .5rem .75rem;
+  border-bottom:1px solid var(--line);background:var(--bg);flex:0 0 auto;
+}
+.imodal__title{flex:1;min-width:0;font-size:.72rem;color:var(--muted);letter-spacing:.02em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.imodal__close{
+  display:grid;place-items:center;width:23px;height:23px;padding:0;cursor:pointer;
+  background:transparent;border:0;border-radius:6px;color:var(--muted);flex:0 0 auto;
+  transition:background .18s,color .18s;
+}
+.imodal__close:hover{background:rgba(224,104,95,.16);color:#e0685f}
+.imodal__close svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+.imodal__body{overflow:auto;background:var(--bg);display:flex;align-items:center;justify-content:center}
+.imodal__body img{display:block;max-width:100%;max-height:calc(92vh - 2.6rem);width:auto;height:auto}
 
 /* ── floating terminal ─────────────────────────────────── */
 .fab{

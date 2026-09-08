@@ -104,6 +104,43 @@
   }
   rollFortune();
 
+  /* ── image modal ─────────────────────────────────────────────────── */
+  (function () {
+    var modal = document.getElementById('img-modal');
+    var img = document.getElementById('img-modal-img');
+    var caption = document.getElementById('img-modal-caption');
+    var triggers = [].slice.call(document.querySelectorAll('.proj__zoom'));
+    if (!modal || !img || !triggers.length) return;
+
+    var lastFocus = null;
+
+    function openModal(trigger) {
+      lastFocus = document.activeElement;
+      img.src = trigger.getAttribute('data-full') || trigger.querySelector('img').src;
+      img.alt = trigger.querySelector('img') ? trigger.querySelector('img').alt : '';
+      caption.textContent = trigger.getAttribute('data-caption') || img.alt;
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      modal.querySelector('.imodal__close').focus();
+    }
+    function closeModal() {
+      modal.hidden = true;
+      img.src = '';
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    triggers.forEach(function (t) {
+      t.addEventListener('click', function () { openModal(t); });
+    });
+    [].slice.call(modal.querySelectorAll('[data-imodal-close]')).forEach(function (el) {
+      el.addEventListener('click', closeModal);
+    });
+    modal.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { e.stopPropagation(); closeModal(); }
+    });
+  })();
+
   /* ── the floating terminal ───────────────────────────────────────
      A draggable window summoned by the FAB. Minimise keeps the session,
      close throws it away. Everything here is progressive enhancement:

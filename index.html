@@ -200,13 +200,20 @@
             <div class="win__bar" aria-hidden="true">
               <i></i><i></i><i></i><span>~/projects/agentic-day1/preview.png</span>
             </div>
-            <img src="sources/img/projects/day1-content-idea-agent.jpg"
-                 alt="Screenshot of the Agentic Day1 content idea agent running in Google ADK's dev UI"
-                 width="1280" height="695" loading="lazy" decoding="async">
+            <button type="button" class="proj__zoom"
+                    data-full="sources/img/projects/day1-content-idea-agent.jpg"
+                    data-caption="Single-Tool Agent — preview">
+              <img src="sources/img/projects/day1-content-idea-agent.jpg"
+                   alt="Screenshot of the Agentic Day1 content idea agent running in Google ADK's dev UI"
+                   width="1280" height="695" loading="lazy" decoding="async">
+              <span class="proj__zoom-i" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M10 4a6 6 0 104.47 10.03l4.75 4.75 1.06-1.06-4.75-4.75A6 6 0 0010 4zm0 1.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zM9.25 7.5v1.75H7.5v1.5h1.75v1.75h1.5v-1.75h1.75v-1.5h-1.75V7.5z"/></svg>
+              </span>
+            </button>
           </div>
         </figure>
         <div class="proj__body">
-          <h3 class="proj__t">Hari 1 — Single-Tool Agent</h3>
+          <h3 class="proj__t">Single-Tool Agent</h3>
           <p class="proj__d">A single-tool agentic AI built for the "Agentic AI" learning track: a
           content-idea agent that takes a topic and calls a custom tool to generate short-video
           content ideas, built with Google's Agent Development Kit (ADK).</p>
@@ -325,6 +332,23 @@
   <p class="dim">Built by hand — no framework, no build step. <a href="https://github.com/harfialpharaby/harfialpharaby.github.io" target="_blank" rel="noopener">source</a></p>
 </footer>
 
+
+<!-- ─────────────  IMAGE MODAL  ───────────── -->
+<div id="img-modal" class="imodal" role="dialog" aria-modal="true" aria-label="Image preview" hidden>
+  <div class="imodal__backdrop" data-imodal-close></div>
+  <div class="imodal__win">
+    <div class="imodal__bar">
+      <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="imodal__title" id="img-modal-caption"></span>
+      <button type="button" class="imodal__close" data-imodal-close aria-label="Close preview">
+        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="m3 3 6 6M9 3l-6 6"/></svg>
+      </button>
+    </div>
+    <div class="imodal__body">
+      <img id="img-modal-img" src="" alt="">
+    </div>
+  </div>
+</div>
 
 <!-- ─────────────  FLOATING TERMINAL  ───────────── -->
 <button id="term-fab" class="fab" type="button" aria-expanded="false" aria-controls="term-win">
