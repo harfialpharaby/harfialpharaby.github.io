@@ -246,7 +246,11 @@ main{max-width:var(--wrap);margin:0 auto;padding:0 var(--pad)}
 }
 .proj:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));transform:translateY(-2px)}
 .proj__shot{margin:0;line-height:0}
-.proj__shot .win{border:0;border-radius:0;box-shadow:none}
+.proj__shot .win{border:0;border-radius:0;box-shadow:none;transition:none}
+.proj__shot .win:hover{transform:none;border-color:transparent}
+.proj__shot .win:hover .win__bar i:nth-child(1),
+.proj__shot .win:hover .win__bar i:nth-child(2),
+.proj__shot .win:hover .win__bar i:nth-child(3){background:var(--line)}
 .proj__hero{display:block;line-height:0}
 .proj__hero img{display:block;width:100%;height:auto;aspect-ratio:16/8.68;object-fit:cover}
 .proj__hero video{display:block;width:100%;height:auto;aspect-ratio:16/8.68;object-fit:cover}
