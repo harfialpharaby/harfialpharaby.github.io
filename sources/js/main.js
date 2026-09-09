@@ -116,10 +116,7 @@
           '<figure class="proj__shot">' +
             '<div class="win">' +
               '<div class="win__bar" aria-hidden="true"><i></i><i></i><i></i><span>' + esc(p.dir || '~/projects/') + '</span></div>' +
-              '<button type="button" class="proj__zoom" data-proj-open="' + esc(p.id) + '">' +
-                heroHTML +
-                '<span class="proj__zoom-i" aria-hidden="true">' + ICONS.zoom + '</span>' +
-              '</button>' +
+              '<div class="proj__hero">' + heroHTML + '</div>' +
             '</div>' +
           '</figure>' +
           '<div class="proj__body">' +
