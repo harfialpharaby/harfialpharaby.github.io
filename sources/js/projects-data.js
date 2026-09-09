@@ -114,7 +114,7 @@ window.PORTFOLIO_PROJECTS = [
       'No public live demo for this one — it\'s deployed to a Google Cloud project console, not ' +
       'an open URL — but the source is on GitHub, linked below.'
     ],
-    chips: ['Agentic AI', 'Vertex AI Agent Engine', 'Google ADK', 'TypeScript'],
+    chips: ['Agentic AI', 'Vertex AI Agent Engine', 'Google ADK', 'Python'],
     media: [
       {
         type: 'image',
