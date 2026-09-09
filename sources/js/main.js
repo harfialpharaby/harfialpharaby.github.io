@@ -91,10 +91,13 @@
   };
 
   function projLinksHTML(p) {
-    return (
-      '<a href="' + esc(p.live) + '" target="_blank" rel="noopener">' + ICONS.live + '<span class="links__c">live demo</span></a>' +
-      '<a href="' + esc(p.repo) + '" target="_blank" rel="noopener">' + ICONS.repo + '<span class="links__c">repository</span></a>'
-    );
+    var live = p.live
+      ? '<a href="' + esc(p.live) + '" target="_blank" rel="noopener">' + ICONS.live + '<span class="links__c">live demo</span></a>'
+      : '<span class="proj__links-unavailable">' + ICONS.live + '<span class="links__c">no live demo</span></span>';
+    var repo = p.repo
+      ? '<a href="' + esc(p.repo) + '" target="_blank" rel="noopener">' + ICONS.repo + '<span class="links__c">repository</span></a>'
+      : '';
+    return live + repo;
   }
 
   function renderCards() {

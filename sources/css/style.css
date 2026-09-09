@@ -266,6 +266,12 @@ main{max-width:var(--wrap);margin:0 auto;padding:0 var(--pad)}
 .proj__links a:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
 .proj__links svg{width:14px;height:14px;flex:0 0 auto;fill:var(--muted);transition:fill .18s}
 .proj__links a:hover svg{fill:var(--accent)}
+.proj__links-unavailable{
+  display:inline-flex;align-items:center;gap:.4rem;color:var(--muted);cursor:default;
+  border:1px dashed var(--line);border-radius:100px;padding:.38rem .85rem .38rem .7rem;
+  font-size:.78rem;background:transparent;opacity:.6;
+}
+.proj__links-unavailable svg{width:14px;height:14px;flex:0 0 auto;fill:var(--muted)}
 .proj__links--sub{margin-top:.1rem}
 .proj__more{
   display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;color:var(--muted);

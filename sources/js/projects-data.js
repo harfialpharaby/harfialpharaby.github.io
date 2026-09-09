@@ -90,5 +90,46 @@ window.PORTFOLIO_PROJECTS = [
     ],
     live: 'https://day3-content-pipeline-agent-509431747522.us-central1.run.app/',
     repo: 'https://github.com/harfialpharaby/agentic-day3'
+  },
+  {
+    id: 'content-idea-agent-day4',
+    dir: '~/projects/agentic-day4/',
+    title: 'Content Idea Agent — Agent Engine',
+    shortDesc: 'The Content Idea Agent redeployed on Vertex AI Agent Engine, with local ' +
+      'test traces and a live request/latency dashboard on Google Cloud.',
+    longDesc: [
+      'This "Day 4" build takes the content-idea agent from earlier in the track and moves it off ' +
+      'Cloud Run onto Vertex AI Agent Engine (Google Cloud\'s managed hosting for ADK agents), to ' +
+      'get a real look at productionizing an agent rather than just running it as a service.',
+
+      'Before deploying, the local test run traces the full event stream: a get_content_ideas ' +
+      'function call, its response, and the agent\'s final short-form video ideas — useful for ' +
+      'seeing exactly what an ADK agent turn looks like under the hood (tool calls, token usage, ' +
+      'invocation IDs) rather than just the chat-level output.',
+
+      'Once deployed, the Agent Engine dashboard gives request rate and p50/p95/p99 latency out of ' +
+      'the box — the kind of operational visibility you don\'t get from a bare Cloud Run service ' +
+      'without wiring it up yourself.',
+
+      'No public live demo for this one — it\'s deployed to a Google Cloud project console, not ' +
+      'an open URL — but the source is on GitHub, linked below.'
+    ],
+    chips: ['Agentic AI', 'Vertex AI Agent Engine', 'Google ADK', 'TypeScript'],
+    media: [
+      {
+        type: 'image',
+        src: 'sources/img/projects/day4/local-test-and-deploy.jpg',
+        alt: 'Terminal showing a local ADK agent test run followed by deployment to Vertex AI Agent Engine',
+        caption: 'Local test run (event trace) followed by deploy to Agent Engine'
+      },
+      {
+        type: 'image',
+        src: 'sources/img/projects/day4/agent-engine-dashboard.jpg',
+        alt: 'Vertex AI Agent Engine dashboard showing request count and latency for the deployed agent',
+        caption: 'Agent Engine dashboard — request rate and p50/p95/p99 latency'
+      }
+    ],
+    live: null,
+    repo: 'https://github.com/harfialpharaby/agentic-day4'
   }
 ];
