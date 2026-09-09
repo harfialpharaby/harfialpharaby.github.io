@@ -73,6 +73,142 @@
     })();
   }
 
+  /* ── projects: render cards from data, wire up detail + media modals ── */
+  var PROJECTS = window.PORTFOLIO_PROJECTS || [];
+  var grid = document.getElementById('projects-grid');
+  var totalEl = document.getElementById('projects-total');
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  var ICONS = {
+    live: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6v2H5v12h12v-6h2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg>',
+    repo: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23a11.5 11.5 0 016 0c2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>',
+    zoom: '<svg viewBox="0 0 24 24"><path d="M10 4a6 6 0 104.47 10.03l4.75 4.75 1.06-1.06-4.75-4.75A6 6 0 0010 4zm0 1.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zM9.25 7.5v1.75H7.5v1.5h1.75v1.75h1.5v-1.75h1.75v-1.5h-1.75V7.5z"/></svg>',
+    more: '<svg viewBox="0 0 24 24"><path d="M4 12h16M13 5l7 7-7 7"/></svg>'
+  };
+
+  function projLinksHTML(p) {
+    return (
+      '<a href="' + esc(p.live) + '" target="_blank" rel="noopener">' + ICONS.live + '<span class="links__c">live demo</span></a>' +
+      '<a href="' + esc(p.repo) + '" target="_blank" rel="noopener">' + ICONS.repo + '<span class="links__c">repository</span></a>'
+    );
+  }
+
+  function renderCards() {
+    if (!grid) return;
+    if (totalEl) totalEl.textContent = 'total ' + PROJECTS.length;
+    if (!PROJECTS.length) {
+      grid.innerHTML = '<p class="hint">' + esc(grid.getAttribute('data-empty-hint') || 'no projects yet') + '</p>';
+      return;
+    }
+    grid.innerHTML = PROJECTS.map(function (p) {
+      var hero = p.media && p.media[0];
+      var heroHTML = hero
+        ? (hero.type === 'video'
+            ? '<video src="' + esc(hero.src) + '" ' + (hero.poster ? 'poster="' + esc(hero.poster) + '" ' : '') + 'muted loop playsinline preload="metadata"></video>'
+            : '<img src="' + esc(hero.src) + '" alt="' + esc(hero.alt || p.title) + '" loading="lazy" decoding="async">')
+        : '';
+      return (
+        '<article class="proj" data-proj-id="' + esc(p.id) + '">' +
+          '<figure class="proj__shot">' +
+            '<div class="win">' +
+              '<div class="win__bar" aria-hidden="true"><i></i><i></i><i></i><span>' + esc(p.dir || '~/projects/') + '</span></div>' +
+              '<button type="button" class="proj__zoom" data-proj-open="' + esc(p.id) + '">' +
+                heroHTML +
+                '<span class="proj__zoom-i" aria-hidden="true">' + ICONS.zoom + '</span>' +
+              '</button>' +
+            '</div>' +
+          '</figure>' +
+          '<div class="proj__body">' +
+            '<h3 class="proj__t">' + esc(p.title) + '</h3>' +
+            '<p class="proj__d">' + esc(p.shortDesc) + '</p>' +
+            '<ul class="chips">' + (p.chips || []).map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul>' +
+            '<div class="proj__links">' + projLinksHTML(p) + '</div>' +
+            '<div class="proj__links proj__links--sub">' +
+              '<button type="button" class="proj__more" data-proj-open="' + esc(p.id) + '">' + ICONS.more + '<span>cat README.md</span></button>' +
+            '</div>' +
+          '</div>' +
+        '</article>'
+      );
+    }).join('');
+  }
+  renderCards();
+
+  /* ── project detail modal ────────────────────────────────────────── */
+  (function () {
+    var pmodal = document.getElementById('proj-modal');
+    if (!pmodal || !grid) return;
+    var pTitle = document.getElementById('proj-modal-title');
+    var pDir = document.getElementById('proj-modal-dir');
+    var pMedia = document.getElementById('proj-modal-media');
+    var pDesc = document.getElementById('proj-modal-desc');
+    var pChips = document.getElementById('proj-modal-chips');
+    var pLinks = document.getElementById('proj-modal-links');
+    var lastFocus = null;
+
+    function byId(id) {
+      for (var i = 0; i < PROJECTS.length; i++) if (PROJECTS[i].id === id) return PROJECTS[i];
+      return null;
+    }
+
+    function openProj(p) {
+      lastFocus = document.activeElement;
+      pTitle.textContent = p.title;
+      pDir.textContent = p.dir || '~/projects/';
+      pDesc.innerHTML = (p.longDesc || [p.shortDesc]).map(function (para) {
+        return '<p>' + esc(para) + '</p>';
+      }).join('');
+      pChips.innerHTML = (p.chips || []).map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('');
+      pLinks.innerHTML = projLinksHTML(p);
+      pMedia.innerHTML = (p.media || []).map(function (m, i) {
+        if (m.type === 'video') {
+          var src = m.embed
+            ? '<iframe src="' + esc(m.embed) + '" loading="lazy" allowfullscreen title="' + esc(m.caption || p.title) + '" style="width:100%;height:8rem;border:0;pointer-events:none"></iframe>'
+            : '<video src="' + esc(m.src) + '" ' + (m.poster ? 'poster="' + esc(m.poster) + '" ' : '') + 'muted preload="metadata"></video>';
+          return '<button type="button" class="pmodal__thumb" data-media-index="' + i + '"><span class="badge">video</span>' + src + '</button>';
+        }
+        return '<button type="button" class="pmodal__thumb" data-media-index="' + i + '"><img src="' + esc(m.src) + '" alt="' + esc(m.alt || p.title) + '" loading="lazy"></button>';
+      }).join('');
+
+      [].slice.call(pMedia.querySelectorAll('[data-media-index]')).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var m = p.media[Number(btn.getAttribute('data-media-index'))];
+          openMedia(m, p.title);
+        });
+      });
+
+      pmodal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      pmodal.querySelector('.pmodal__close').focus();
+    }
+    function closeProj() {
+      pmodal.hidden = true;
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    grid.addEventListener('click', function (e) {
+      var trigger = e.target.closest('[data-proj-open]');
+      if (!trigger) return;
+      var p = byId(trigger.getAttribute('data-proj-open'));
+      if (p) openProj(p);
+    });
+    [].slice.call(pmodal.querySelectorAll('[data-pmodal-close]')).forEach(function (el) {
+      el.addEventListener('click', closeProj);
+    });
+    pmodal.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { e.stopPropagation(); closeProj(); }
+    });
+
+    window.__portfolioOpenMedia = null; // set below once imodal is ready
+    function openMedia(m, title) {
+      if (window.__portfolioOpenMedia) window.__portfolioOpenMedia(m, title);
+    }
+  })();
+
   /* ── reveal on scroll ────────────────────────────────────────────── */
   var toReveal = [].slice.call(document.querySelectorAll('.reveal'));
   if (!toReveal.length) { /* nothing */ }
@@ -104,41 +240,64 @@
   }
   rollFortune();
 
-  /* ── image modal ─────────────────────────────────────────────────── */
+  /* ── media lightbox (images + videos, used by the project detail modal) ── */
   (function () {
     var modal = document.getElementById('img-modal');
     var img = document.getElementById('img-modal-img');
     var caption = document.getElementById('img-modal-caption');
-    var triggers = [].slice.call(document.querySelectorAll('.proj__zoom'));
-    if (!modal || !img || !triggers.length) return;
+    var body = modal ? modal.querySelector('.imodal__body') : null;
+    if (!modal || !img || !body) return;
 
     var lastFocus = null;
 
-    function openModal(trigger) {
+    function openModal(media, title) {
       lastFocus = document.activeElement;
-      img.src = trigger.getAttribute('data-full') || trigger.querySelector('img').src;
-      img.alt = trigger.querySelector('img') ? trigger.querySelector('img').alt : '';
-      caption.textContent = trigger.getAttribute('data-caption') || img.alt;
+      body.innerHTML = '';
+      if (media.type === 'video') {
+        if (media.embed) {
+          var frame = document.createElement('iframe');
+          frame.src = media.embed;
+          frame.allowFullscreen = true;
+          frame.style.cssText = 'width:min(88vw,60rem);height:min(70vh,34rem);border:0';
+          frame.title = media.caption || title || 'video';
+          body.appendChild(frame);
+        } else {
+          var video = document.createElement('video');
+          video.src = media.src;
+          video.controls = true;
+          video.autoplay = true;
+          video.style.cssText = 'max-width:100%;max-height:calc(92vh - 2.6rem)';
+          body.appendChild(video);
+        }
+      } else {
+        img.src = media.src;
+        img.alt = media.alt || title || '';
+        body.appendChild(img);
+      }
+      caption.textContent = media.caption || media.alt || title || '';
       modal.hidden = false;
       document.body.style.overflow = 'hidden';
       modal.querySelector('.imodal__close').focus();
     }
     function closeModal() {
       modal.hidden = true;
+      body.innerHTML = '';
+      body.appendChild(img);
       img.src = '';
+      var playing = modal.querySelectorAll('video');
+      [].slice.call(playing).forEach(function (v) { v.pause(); });
       document.body.style.overflow = '';
       if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
 
-    triggers.forEach(function (t) {
-      t.addEventListener('click', function () { openModal(t); });
-    });
     [].slice.call(modal.querySelectorAll('[data-imodal-close]')).forEach(function (el) {
       el.addEventListener('click', closeModal);
     });
     modal.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') { e.stopPropagation(); closeModal(); }
     });
+
+    window.__portfolioOpenMedia = openModal;
   })();
 
   /* ── the floating terminal ───────────────────────────────────────
