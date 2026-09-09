@@ -268,13 +268,13 @@
     facebook: 'https://web.facebook.com/harfialfaraby',
     mail: 'mailto:harfialpharaby@gmail.com'
   };
-  var SECTIONS = ['about', 'work', 'stack', 'education', 'contact'];
+  var SECTIONS = ['about', 'work', 'projects', 'stack', 'education', 'contact'];
   var ALIASES  = { edu: 'education' };   // old anchor still works
 
   var HELP = [
     'whoami           who is this',
     'ls [work|stack]  list roles or skills',
-    'cd <section>     jump to about | work | stack | education | contact',
+    'cd <section>     jump to about | work | projects | stack | education | contact',
     'open <site>      linkedin | github | behance | instagram | facebook | mail',
     'theme [d|l]      toggle or set the colour theme',
     'fortune          roll a new quote',
